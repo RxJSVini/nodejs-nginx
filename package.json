@@ -1,0 +1,31 @@
+{
+  "name": "nodejs-nginx",
+  "version": "1.0.0",
+  "description": "Simples api para testar nginx como proxy reverso",
+  "main": "server.js",
+  "scripts": {
+    "dev": "tsx src/server.ts",
+    "build": "tsc",
+    "start": "node src/server.js",
+    "lint": "eslint"
+  },
+  "keywords": [
+    "nginx",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "vinicius p",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^4.23.2"
+  },
+  "devDependencies": {
+    "@types/ffmpeg": "^1.0.5",
+    "@types/node": "^20.8.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "eslint": "^8.51.0",
+    "tsx": "^3.13.0",
+    "typescript": "^5.2.2"
+  }
+}
