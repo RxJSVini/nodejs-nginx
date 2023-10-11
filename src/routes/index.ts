@@ -1,4 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import jwt from '@fastify/jwt';
+import 'dotenv/config';
 
 const fakeUsers = [
     {
@@ -54,6 +56,14 @@ interface BodyAuthenticationRequest {
 
 
 export async function AppRoutes(app: FastifyInstance) {
+
+
+    app.register(jwt, {
+        secret: process.env.JWT_SECRET || '03c7c0ace395d80182db07ae2c30f034'// Só pra testar kkkkkkkk 😂
+    });
+
+
+
     app.get('/ping', (request, reply: FastifyReply) => {
         reply.send({
             status: 200,
