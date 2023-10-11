@@ -57,7 +57,6 @@ interface BodyAuthenticationRequest {
 
 export async function AppRoutes(app: FastifyInstance) {
 
-
     app.register(jwt, {
         secret: process.env.JWT_SECRET || '03c7c0ace395d80182db07ae2c30f034'// Só pra testar kkkkkkkk 😂
     });
@@ -103,33 +102,35 @@ export async function AppRoutes(app: FastifyInstance) {
 
     app.post('/auth', async (request:FastifyRequest<{Body:BodyAuthenticationRequest}>, reply: FastifyReply) =>{
 
-        const { email, password }: BodyAuthenticationRequest  = request.body;
+        try {
+            const { email, password }: BodyAuthenticationRequest  = request.body;
 
-
-        const userExists = fakeUsers.map(a => a).filter(b => b.email === email);
-        console.log(userExists);
-
-        if(userExists.length >= 1){
-
-            if(userExists[0].password === password){
-                const token = await reply.jwtSign({
-                    email,
-                }, {expiresIn: '1d'});
+            const userExists = fakeUsers.map(a => a).filter(b => b.email === email);
     
+            if(userExists.length >= 1){
     
-                return reply.send({
-                    status: 200,
-                    message: 'The user has been authenticated',
-                    token
-                });
+                if(userExists[0].password === password){
+                    const token = await reply.jwtSign({
+                        email,
+                    }, {expiresIn: '1d'});
+        
+        
+                    return reply.send({
+                        status: 200,
+                        message: 'The user has been authenticated',
+                        token
+                    });
+                }
+                
             }
-            
+            return reply.status(403).send({
+                status: 403,
+                message:'No Access'
+            });
+     
+        } catch (error) {
+            throw new Error(error);
         }
-        return reply.status(403).send({
-            status: 403,
-            message:'No Access'
-        });
-
     });
 
 
